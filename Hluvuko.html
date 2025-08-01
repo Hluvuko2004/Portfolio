@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hluvuko Maluleke - Computer Science Student Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0F172A;
+            color: #F4F4F4;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid #22D3EE;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #22D3EE;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #F4F4F4;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #22D3EE;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #22D3EE, #F4F4F4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #64748B;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #22D3EE;
+            color: #0F172A;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #22D3EE;
+            border: 2px solid #22D3EE;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(34, 211, 238, 0.3);
+        }
+
+        .btn-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Admin Panel */
+        .admin-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #22D3EE;
+            color: #0F172A;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 9999;
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+
+        .admin-panel {
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #22D3EE;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 10000;
+            min-width: 280px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .admin-panel.show {
+            display: block;
+        }
+
+        .admin-panel h3 {
+            color: #22D3EE;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .admin-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            padding: 8px 15px;
+            background: #22D3EE;
+            color: #0F172A;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: #1ea7c4;
+        }
+
+        .admin-btn {
+            padding: 8px 15px;
+            border: 1px solid #22D3EE;
+            background: transparent;
+            color: #22D3EE;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: #22D3EE;
+            color: #0F172A;
+        }
+
+        .admin-btn.danger {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .admin-btn.danger:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .resume-status {
+            font-size: 0.8em;
+            padding: 5px 8px;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+
+        .resume-status.available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .resume-status.unavailable {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #22D3EE;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #22D3EE, #64748B);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: #0F172A;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(34, 211, 238, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #22D3EE;
+        }
+
+        .skill-category h3 {
+            color: #22D3EE;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(100, 116, 139, 0.3);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(34, 211, 238, 0.05);
+            border: 1px solid #22D3EE;
+            border-radius: 10px;
+            padding: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.2);
+        }
+
+        .project-card h3 {
+            color: #22D3EE;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-tag {
+            background-color: #64748B;
+            color: #F4F4F4;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .project-links {
+            margin-top: 1rem;
+        }
+
+        .project-links a {
+            color: #22D3EE;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            border: 1px solid #64748B;
+            border-radius: 5px;
+            background-color: rgba(34, 211, 238, 0.05);
+            color: #F4F4F4;
+            font-family: inherit;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #64748B;
+        }
+
+        .contact-info {
+            padding: 2rem;
+            background: rgba(34, 211, 238, 0.1);
+            border-radius: 10px;
+            border: 1px solid #22D3EE;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-item span {
+            margin-right: 1rem;
+            color: #22D3EE;
+            width: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0F172A;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #22D3EE;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Panel -->
+    <button class="admin-toggle" onclick="toggleAdmin()">⚙️</button>
+    <div id="adminPanel" class="admin-panel">
+        <h3>Resume Manager</h3>
+        <div class="admin-controls">
+            <div class="file-input-wrapper">
+                <input type="file" id="resumeUpload" accept=".pdf">
+                <label for="resumeUpload" class="file-input-label">Upload Resume</label>
+            </div>
+            <button class="admin-btn danger" onclick="removeResume()">Remove Resume</button>
+            <div id="resumeStatus" class="resume-status unavailable">No resume uploaded</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Hluvuko Maluleke</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Computer Science Student & Aspiring Developer</h1>
+            <p>Passionate about creating innovative solutions through code • Seeking Work Integrated Learning opportunities</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Projects</a>
+                <a href="#contact" class="btn btn-secondary">WIL Opportunities</a>
+                <a href="#" id="resumeDownloadBtn" class="btn btn-secondary btn-disabled">Download Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="profile-image">👨‍💻</div>
+            <div class="about-text">
+                <p>I'm Hluvuko Maluleke, a dedicated Computer Science student with a passion for software development, mobile applications, business analysis, and database administration. Through my academic journey, I've developed strong technical skills by working on real-world projects like EventPro and an AI-powered Vehicle Crash Detection System.</p>
+                
+                <p>As I progress through my studies, I'm actively seeking Work Integrated Learning (WIL) opportunities to apply my theoretical knowledge in practical, professional environments. I'm eager to contribute to innovative projects while gaining valuable industry experience and mentorship from experienced professionals.</p>
+                
+                <p>My unique combination of technical proficiency and analytical thinking allows me to approach problems from multiple angles. I thrive on learning new technologies, collaborating in team environments, and turning complex challenges into elegant, user-friendly solutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Technical Skills & Competencies</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Software Development</h3>
+                <ul class="skill-list">
+                    <li>JavaScript (ES6+), TypeScript</li>
+                    <li>PHP, Python, Java, C#</li>
+                    <li>React, Angular, Vue.js</li>
+                    <li>Node.js, Express.js</li>
+                    <li>RESTful APIs, GraphQL</li>
+                    <li>Git Version Control</li>
+                </ul>
+            </div>
+            
+            <div class="skill-category">
+                <h3>Mobile Development</h3>
+                <ul class="skill-list">
+                    <li>Flutter & Dart</li>
+                    <li>React Native</li>
+                    <li>Native Android (Kotlin/Java)</li>
+                    <li>iOS Development (Swift)</li>
+                    <li>Cross-platform Solutions</li>
+                    <li>Mobile UI/UX Design</li>
+                </ul>
+            </div>
+            
+            <div class="skill-category">
+                <h3>Business Analysis</h3>
+                <ul class="skill-list">
+                    <li>Requirements Gathering</li>
+                    <li>Process Modeling (BPMN)</li>
+                    <li>Data Analysis & Visualization</li>
+                    <li>Stakeholder Management</li>
+                    <li>Agile & Scrum Methodologies</li>
+                    <li>Business Intelligence Tools</li>
+                </ul>
+            </div>
+            
+            <div class="skill-category">
+                <h3>Database & Infrastructure</h3>
+                <ul class="skill-list">
+                    <li>MySQL, PostgreSQL, MongoDB</li>
+                    <li>Database Design & Optimization</li>
+                    <li>Cloud Platforms (AWS, Azure)</li>
+                    <li>Docker, Kubernetes</li>
+                    <li>CI/CD Pipelines</li>
+                    <li>Performance Monitoring</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Academic Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Event Management System (EventPro)</h3>
+                <p>Comprehensive event management platform featuring a professional dashboard with statistics tracking, CRUD operations for events, search functionality, and role-based access control. Built with modern web technologies and includes user authentication, event creation forms, and responsive design.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">HTML5</span>
+                    <span class="tech-tag">CSS3</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Local Storage</span>
+                    <span class="tech-tag">Responsive Design</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://refilwe15.github.io/alpha-event-management-repo/" target="_blank">Live Demo</a>
+                    <a href="https://github.com/Hluvuko2004" target="_blank">GitHub</a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3>AI-Powered Vehicle Crash Detection System</h3>
+                <p>Life-saving emergency response platform with smart crash detection using smartphone sensors and AI-powered sound recognition. Features real-time GPS tracking, automated emergency alerts, multi-channel notifications, and role-based dashboards for emergency responders, paramedics, and administrators.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">HTML/CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Bootstrap</span>
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Google Maps API</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://carcrashsystem.liveblog365.com/landing.php">Live Demo</a>
+                    <a href="https://github.com/Hluvuko2004">GitHub Profile</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Let's Connect</h2>
+        <div class="contact-content">
+            <div>
+                <h3>Get In Touch for WIL Opportunities</h3>
+                <p style="margin-bottom: 2rem;">I'm actively seeking Work Integrated Learning opportunities where I can apply my academic knowledge in real-world settings. Whether you're looking for an intern in software development, mobile app development, or database administration, I'm eager to contribute and learn from experienced professionals.</p>
+                
+                <div class="contact-form">
+                    <input type="text" id="contactName" placeholder="Your Name" required>
+                    <input type="email" id="contactEmail" placeholder="Your Email" required>
+                    <input type="text" id="contactSubject" placeholder="Subject" required>
+                    <textarea id="contactMessage" rows="5" placeholder="Your Message" required></textarea>
+                    <button type="button" id="sendMessageBtn" class="btn btn-primary">Send Message</button>
+                    <div id="messageStatus" style="margin-top: 1rem; padding: 1rem; border-radius: 5px; display: none;"></div>
+                </div>
+            </div>
+            
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span>massivehluvuko16@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span>+27 072 793 3660</span>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>Pretoria, South Africa</span>
+                </div>
+                <div class="contact-item">
+                    <span>💼</span>
+                    <a href="https://www.linkedin.com/in/hluvuko-maluleke-3b099829b" style="color: #22D3EE;">LinkedIn Profile</a>
+                </div>
+                <div class="contact-item">
+                    <span>🔗</span>
+                    <a href="https://github.com/Hluvuko2004" style="color: #22D3EE;">GitHub Profile</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Hluvuko Maluleke. All rights reserved. Built with passion and modern web technologies.</p>
+    </footer>
+
+    <script>
+        let currentResume = null;
+        let resumeURL = null;
+
+        function toggleAdmin() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('show');
+            updateResumeStatus();
+        }
+
+        function removeResume() {
+            currentResume = null;
+            if (resumeURL) {
+                URL.revokeObjectURL(resumeURL);
+                resumeURL = null;
+            }
+            updateResumeButton();
+            updateResumeStatus();
+            document.getElementById('resumeUpload').value = '';
+            showNotification('Resume removed!', 'success');
+        }
+
+        function updateResumeButton() {
+            const btn = document.getElementById('resumeDownloadBtn');
+            if (currentResume && resumeURL) {
+                btn.href = resumeURL;
+                btn.setAttribute('download', currentResume.name);
+                btn.classList.remove('btn-disabled');
+                btn.onclick = null;
+            } else {
+                btn.href = '#';
+                btn.removeAttribute('download');
+                btn.classList.add('btn-disabled');
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    showNotification('No resume uploaded yet!', 'error');
+                };
+            }
+        }
+
+        function updateResumeStatus() {
+            const status = document.getElementById('resumeStatus');
+            if (currentResume) {
+                status.textContent = 'Resume: ' + currentResume.name;
+                status.className = 'resume-status available';
+            } else {
+                status.textContent = 'No resume uploaded';
+                status.className = 'resume-status unavailable';
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.innerHTML = message;
+            notification.style.cssText = 'position: fixed; top: 80px; right: 20px; padding: 10px 15px; border-radius: 5px; z-index: 10001; ' + 
+                (type === 'success' ? 'background: #d4edda; color: #155724;' : 'background: #f8d7da; color: #721c24;');
+            document.body.appendChild(notification);
+            
+            setTimeout(function() {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        document.getElementById('resumeUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file && file.type === 'application/pdf') {
+                currentResume = file;
+                if (resumeURL) {
+                    URL.revokeObjectURL(resumeURL);
+                }
+                resumeURL = URL.createObjectURL(file);
+                updateResumeButton();
+                updateResumeStatus();
+                showNotification('Resume uploaded!', 'success');
+            } else {
+                showNotification('Please select a PDF file!', 'error');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateResumeButton();
+            updateResumeStatus();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        document.getElementById('sendMessageBtn').addEventListener('click', function() {
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const subject = document.getElementById('contactSubject').value.trim();
+            const message = document.getElementById('contactMessage').value.trim();
+            const messageStatus = document.getElementById('messageStatus');
+            const sendBtn = document.getElementById('sendMessageBtn');
+            
+            messageStatus.style.display = 'none';
+            
+            if (!name || !email || !subject || !message) {
+                showMessage('Please fill in all fields!', 'error');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Please enter a valid email!', 'error');
+                return;
+            }
+            
+            sendBtn.textContent = 'Sending...';
+            sendBtn.disabled = true;
+            
+            setTimeout(function() {
+                document.getElementById('contactName').value = '';
+                document.getElementById('contactEmail').value = '';
+                document.getElementById('contactSubject').value = '';
+                document.getElementById('contactMessage').value = '';
+                
+                showMessage('Message sent successfully!', 'success');
+                
+                sendBtn.textContent = 'Send Message';
+                sendBtn.disabled = false;
+            }, 1500);
+        });
+        
+        function showMessage(text, type) {
+            const messageStatus = document.getElementById('messageStatus');
+            messageStatus.textContent = text;
+            messageStatus.style.display = 'block';
+            
+            if (type === 'success') {
+                messageStatus.style.backgroundColor = '#d4edda';
+                messageStatus.style.color = '#155724';
+                messageStatus.style.border = '1px solid #c3e6cb';
+            } else {
+                messageStatus.style.backgroundColor = '#f8d7da';
+                messageStatus.style.color = '#721c24';
+                messageStatus.style.border = '1px solid #f5c6cb';
+            }
+            
+            if (type === 'success') {
+                setTimeout(function() {
+                    messageStatus.style.display = 'none';
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>
